@@ -35,6 +35,9 @@ public class EmpresaDB {
 	private String porte;
 	
 	
+	public EmpresaDB() {
+		super();
+	}
 
 	public EmpresaDB(
 			String nomeFantasia,
@@ -112,7 +115,12 @@ public class EmpresaDB {
 	
 	
 	public EmpresaDB from(Empresa empresa) {
-		return new EmpresaDB(nomeFantasia, razaoSocial, cnpj, telefone, endereco, porte);
+		return new EmpresaDB(empresa.getNome_fantasia(), 
+				empresa.getRazao_social(), 
+				empresa.getCnpj(), 
+				empresa.getDdd_telefone_1(), 
+				empresa.getLogradouro(), 
+				empresa.getPorte());
 	}
 	
 	

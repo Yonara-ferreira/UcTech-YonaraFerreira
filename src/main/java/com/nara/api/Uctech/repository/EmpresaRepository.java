@@ -12,6 +12,10 @@ public interface EmpresaRepository extends JpaRepository<EmpresaDB, Long>{
 	
 	Optional<EmpresaDB> findById(Long id);
 	
+	Optional<EmpresaDB> findByNomeFantasia(String nomeFantasia);
+	
+	EmpresaDB findByCnpj(String cnpj);
+	
 	
 
 }
