@@ -58,17 +58,16 @@ public class EmpresaService extends RuntimeException {
 	}
 	
 	
-	public List<EmpresaDB> findAllCnpj(String cnpj){
+	public List<EmpresaDB> buscar(String filter){
 		List<EmpresaDB> todasEmpresas = empresaRepository.findAll();
-		List<EmpresaDB> empresasPorCnpj = new ArrayList<>();
+		List<EmpresaDB> empresasEncontradas = new ArrayList<>();
 		
 		for(EmpresaDB empresa : todasEmpresas) {
-			String cnpjEmpresa = empresa.getCnpj();
-			if(cnpjEmpresa.contains(cnpj)) {
-				empresasPorCnpj.add(empresa);
+			if(empresa.getCnpj().toLowerCase().contains(filter) || empresa.getNomeFantasia().toLowerCase().contains(filter)) {
+				empresasEncontradas.add(empresa);
 			}
 		}
-		 return empresasPorCnpj;
+		 return empresasEncontradas;
 	}
 
 }

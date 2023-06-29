@@ -42,10 +42,10 @@ public class EmpresaController {
 		return new ResponseEntity<EmpresaDB>(this.service.findById(Id), HttpStatus.OK);	
 	}
 	
-	@GetMapping(value = "buscarCnpj/{cnpj}")
+	@GetMapping(value = "buscar/{filter}")
 	@ResponseBody
-	public ResponseEntity<List<EmpresaDB>> buscarCnpj(@PathVariable(name = "cnpj") String Cnpj){
-		 List<EmpresaDB> empresasEncontradas = this.service.findAllCnpj(Cnpj);
+	public ResponseEntity<List<EmpresaDB>> buscarCnpj(@PathVariable(name = "filter") String filter){
+		 List<EmpresaDB> empresasEncontradas = this.service.buscar(filter);
 		    return ResponseEntity.ok(empresasEncontradas);
 	}
 	
