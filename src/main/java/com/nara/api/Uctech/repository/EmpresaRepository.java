@@ -17,5 +17,6 @@ public interface EmpresaRepository extends JpaRepository<EmpresaDB, Long>{
 	EmpresaDB findByCnpj(String cnpj);
 	
 	
+	
 
 }

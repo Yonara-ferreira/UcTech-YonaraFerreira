@@ -1,5 +1,8 @@
 package com.nara.api.Uctech.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -52,6 +55,20 @@ public class EmpresaService extends RuntimeException {
 	
 	public EmpresaDB findByNomeFantasia(String NomeFantasia) {
 		return empresaRepository.findByNomeFantasia(NomeFantasia).orElse(null);
+	}
+	
+	
+	public List<EmpresaDB> findAllCnpj(String cnpj){
+		List<EmpresaDB> todasEmpresas = empresaRepository.findAll();
+		List<EmpresaDB> empresasPorCnpj = new ArrayList<>();
+		
+		for(EmpresaDB empresa : todasEmpresas) {
+			String cnpjEmpresa = empresa.getCnpj();
+			if(cnpjEmpresa.contains(cnpj)) {
+				empresasPorCnpj.add(empresa);
+			}
+		}
+		 return empresasPorCnpj;
 	}
 
 }
