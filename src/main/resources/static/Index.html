@@ -92,21 +92,20 @@
 	
 		<div class="mb-3">
 			<label for="nomeFantasia" class="form-label">Nome Fantasia</label> <input
-				type="text" style="width: 8%" class="form-control" id="nomeFantasia"
+				type="text" style="width:30%" class="form-control" id="nomeFantasia"
 				>
 		</div>
 
 		<div class="mb-3">
 			<label for="razaoSocial" class="form-label">Razão Social</label> <input
-				type="text" style="width: 50%" class="form-control" id="razaoSocial"
+				type="text" style="width: 30%" class="form-control" id="razaoSocial"
 				placeholder="Informe a razao social" required="required">
 		</div>
 
 		
 		<div class="mb-3">
 			<label for="porteDaEmpresa" class="form-label">Porte Da Empresa</label> <input
-				type="text" style="width: 8%" class="form-control" id="porteEmpresa"
-				placeholder="Informe o cnpj">
+				type="text" style="width: 8%" class="form-control" id="porteEmpresa">
 		</div>
 
 		<div class="mb-3">
@@ -118,15 +117,46 @@
 			<label for="endereço" class="form-label">Endereço</label> <input
 				type="text" style="width: 8%" class="form-control" id="endereço">
 		</div>
-
+		
 	</form>
 	
 	<div id="butoesDeEntrada">
 
-			<button type="button" class="btn btn-primary" onclick="salvarUsuario()">Salvar</button>
-			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalPesquisaUser">Pesquisar</button>
+			<button type="button" class="btn btn-primary" onclick="salvarEmpresa()">Salvar</button>
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalPesquisaEmpresa">Pesquisar</button>
+			<button type="button" class="btn btn-primary">Buscar Cnpj</button>
 	</div>
-	
+
+	<div class="modal fade" id="ModalPesquisaEmpresa" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Pesquisa de Empresa</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form>
+						<div class="mb-3">
+							<label for="nameBusca" class="col-form-label">Informe o
+								nome fantasia:</label> <input type="text" class="form-control"
+								id="nameBusca">
+						</div>
+						<div class="mb-3">
+							<label for="nameBusca" class="col-form-label">Informe o
+								cnpj:</label> <input type="text" class="form-control" id="cnpjBusca">
+						</div>
+
+						<button type="button" class="btn btn-success"
+							onclick="PesquisaInfo()">Buscar</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"
 		integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
@@ -139,17 +169,22 @@
 	</script>
 	
 	<script type="text/javascript">
-		function salvarUsuario(){
+		function PesquisaInfo(){
+			var nomefantasia = $('nomeFantasia').val();
+			var cnpjEmpresa = $('cnpjBusca').val();
+			
+			if(nomeFantasia != null && nomeFantasia.trim() != ''){
+				
+				
+			}
+		}
+	
+	
+	
+		function salvarEmpresa(){
 			var nomefantasia = $('#nomeFantasia').val();
 			var cnpj = $('#cnpj').val();
 			
-			
-			
-			if(nomefantasia == null || nomefantasia != null && nomefantasia.trim() == ''){
-				$('#nomeFantasia').focus()
-				Swal.fire('Por gentileza, informe o nome do usuario')
-				return;
-			}
 			if(cnpj == null || cnpj != null && cnpj.trim() == ''){
 				$('#cnpj').focus()
 				Swal.fire('Por gentileza, informe um cnpj')
@@ -158,16 +193,15 @@
 			
 			$.ajax({
 				method : "POST",
-				url : "salvar",
+				url : "salvar/" + cnpj,
 				data : JSON.stringify({
-					id : id,
-					nomeFantasia : nomeFantasia,
+					nomefantasia : nomefantasia,
 					cnpj : cnpj
 				}),
 				contentType : "application/json; charset=utf-8",
 				success : function(response) {
 
-					$("#cnpj").val(response.id);
+					$("#cnpj").val(response.cnpj);
 					alert("Salvo com Sucesso!");
 
 				}
