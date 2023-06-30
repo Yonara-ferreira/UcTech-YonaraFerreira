@@ -86,7 +86,7 @@
 			
 		<div class="mb-3">
 			<label for="cnpj" class="form-label">CNPJ:</label> <input
-				type="text" style="width: 8%" class="form-control" id="cnpj"
+				type="text" style="width: 15%" name="cnpj" class="form-control" id="cnpj"
 				placeholder="Informe o cnpj">
 		</div>
 	
@@ -114,8 +114,8 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="endereço" class="form-label">Endereço</label> <input
-				type="text" style="width: 8%" class="form-control" id="endereço">
+			<label for="endereco" class="form-label">Endereço</label> <input
+				type="text" style="width: 8%" class="form-control" id="endereco">
 		</div>
 		
 	</form>
@@ -124,7 +124,7 @@
 
 			<button type="button" class="btn btn-primary" onclick="salvarEmpresa()">Salvar</button>
 			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalPesquisaEmpresa">Pesquisar</button>
-			<button type="button" class="btn btn-primary">Buscar Cnpj</button>
+			<button type="button" class="btn btn-primary" onclick="buscarCnpj()">Buscar Cnpj</button>
 	</div>
 
 	<div class="modal fade" id="ModalPesquisaEmpresa" tabindex="-1"
@@ -219,7 +219,6 @@
 		}
 	
 	
-	
 		function salvarEmpresa(){
 			var nomefantasia = $('#nomeFantasia').val();
 			var cnpj = $('#cnpj').val();
@@ -250,6 +249,37 @@
 
 			});
 			
+		}
+		
+		$(document).ready(function() {
+			  $('#cnpj').on('change', function() {
+			    var cnpj = $(this).val();
+			    if (cnpj !== '') {
+			      buscarCnpj(cnpj);
+			    }
+			  });
+			});
+		
+		function buscarCnpj(){
+			$.ajax({
+			    method: 'GET',
+			    url: 'https://brasilapi.com.br/api/cnpj/v1/' + $('#cnpj').val(),
+			    dataType: 'json',
+			    success: function(response) {
+			      // Atualize as informações na página
+			      $('#nomeFantasia').val(response.nome_fantasia);
+			      $('#razaoSocial').val(response.razao_social);
+			      $('#porteEmpresa').val(response.porte);
+			      $('#telefone').val(response.ddd_telefone_1);
+			      $('#endereco').val(response.logradouro);
+
+			      // ...
+			    },
+			    error: function(xhr, status, errorThrown) {
+			      // Trate os erros da requisição
+			      console.log('Erro ao obter informações do CNPJ: ' + xhr.responseText);
+			    }
+			  });
 		}
 	
 	
